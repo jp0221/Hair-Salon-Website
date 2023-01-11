@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Art of Hair</title>
+    <link rel="stylesheet" href="TAOH.css">
+	<style>
+		body { 
+			background-image: url('background.jpg');
+			background-repeat: no-repeat;
+			background-size: 100%;
+			background-attachment: fixed;
+		
+		}
+	</style>
+	
+	<script type = "text/javascript">
+		function validation() {
+			var fName = document.myForm.fname;
+			var lName = document.myForm.lname;
+			var IDN = document.myForm.IDN;
+			var pass = document.myForm.pass;
+			var tel = document.myForm.tel;
+			var email = document.myForm.email;
+			var emailCheck = document.myForm.emailCheck;
+			var transaction = document.myForm.transaction;
+			
+			var passReg = /(?=^.{3,10}$)((?=.*\d)(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[^A-Za-z0-9])(?=.*[a-z])|(?=.*[^A-Za-z0-9])(?=.*[A-Z])(?=.*[a-z])|(?=.*\d)(?=.*[A-Z])(?=.*[^A-Za-z0-9]))^.*/;
+			var emailReg = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+			var idReg = /^[0-9]{8}$/;
+			var telReg = /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/;
+			
+			
+			if(fName.value == ''){
+				alert('First name required');
+				return false;
+			}
+			
+			if(lName.value == ''){
+				alert('Last name required');
+				return false;
+			}
+			
+			var passTest = passReg.test(pass.value);
+			if(pass.value == '' || passTest == false){
+				alert('Please Enter a Valid Password');
+				return false;
+			}
+			
+			var IDNTest = idReg.test(IDN.value);
+			if(IDN.value == '' || IDNTest == false){
+				alert('Please enter a valid Stylist ID');
+				return false;
+			}
+			
+			var telTest = telReg.test(tel.value);
+			if(tel.value == '' || telTest == false){
+				alert('Phone number required');
+				return false;
+			}
+			var emailTest = emailReg.test(email.value);
+			if(email.value == '' && emailCheck.checked){
+				alert('Email required');
+				return false;
+			} else if(emailTest == false && emailCheck.checked){
+				alert('Please enter a valid email');
+				return false;
+			}
+			
+			if(transaction.value == 'Select a option'){
+				alert('Transaction required');
+				return true;
+			}
+			if(verification(fName.value, lName.value, pass.value, sid.value) == true){
+				alert('Welcome to The Art of HairStyle, ' + fName.value + ' ' + lName.value + '. You selected: ' + transaction.value);
+				return true;
+			}
+			return formSubmit();
+		}
+
+		/*function verification(fName, lName, pass, id){
+			var stylists = [['Hannah', 'Davis', 'Hdavis-9', '23918475'], ['Gabriel', 'Santos', 'Gsant0_s', '41239687'], ['Lili', 'Estes', 'Liles&7', '45671239'], ['Alexie', 'Hall', 'Ahall29-', '09843217'], ['Mia', 'Philip', 'Pm1a$', '09873214'], ['Veronica', 'Ball', 'Vball_23', '23672309']] ;
+			for(i = 0; i < stylists.length; i++){
+				if(stylists[i][0] == fName && stylists[i][1] == lName && stylists[i][2] == pass && stylists[i][3] == id){
+					return true;
+				}  else {
+					alert('Your account cannot be found.');
+					break;
+				}
+			}
+		}*/
+	</script>
+
+</head>
+<body>
+	<div class = "box">
+		<h2 align = "center" >The Art of Hair
+			<p>
+				<form name = "myForm" action = "login.php" method = "post">
+					
+					<div class = "formElements">
+					  <label for="fname">Stylist's First name:</label>
+					  <input type="text" id="fname" name="fname" placeholder = "Example John" >
+					  <small>Required</Small>
+					</div>
+					
+					<div class = "formElements">
+					  <label for="lname">Stylist's Last name:</label>
+					  <input type="text" id="lname" name="lname" placeholder = "Example Doe">
+					  <small>Required</Small>
+					</div>
+					
+					<div class = "formElements">
+					  <label for="pass">Stylist's Password:</label>
+					  <input type="password" id="pass" name="pass" maxlength = "10" placeholder = "Example 8a999BD">
+					  <small>Required</Small>
+					</div>
+					
+					<div class = "formElements">
+					  <label for="id">Stylist's ID #:</label>
+					  <input type="text" id="IDN" name="IDN" placeholder = "12345678">
+					  <small>Required</Small>
+					</div>
+					 
+					<div class = "formElements">
+					  <label for="tel">Stylist's Telephone Number:</label>
+					  <input type="Tel" id="tel" name="tel" maxlength = "10" placeholder = "Example 123-456-7890">
+					  <small>Required</Small>
+					</div>
+					 
+					<div class = "formElements">
+					  <label for="email">Stylist's Email Address:</label>
+					  <input type="text" id="email" name="email" placeholder = "Example abc@abc.com">
+					  <small>Required</Small>
+					</div>
+					
+					<div class = "formElements">
+					  <input type="checkbox" id="emailCheck" name="emailCheck" placeholder="email">
+					  <label for="emailCheck"> Check the box to request an Email Confirmation</label>
+					</div>
+					
+					<div class = "formElements">
+					  <label for="selectTranscation"> Select a Transaction: </label>
+					  <select name = "transaction" id = "transaction">
+						<option name = "select" value = "Select a option"></option>
+						<option name = "searchAccount" value = "Search a Stylist's Account"> Search a Stylist's Account</option>
+						<option name = "bookAppointment" value = "Book a Client's Appointment"> Book a Client's Appointment</option>
+						<option name = "placeOrder" value = "Place a Client's Order"> Place a Client's Order</option>
+						<option name = "updateOrder" value = "Update a Client's Order"> Update a Client's Order</option>
+						<option name = "cancelAppointement" value = "Cancel a Client's Appointment"> Cancel a Client's Appointment</option>
+						<option name = "cancelOrder" value = "Cancel a Client's Order"> Cancel a Client's Order</option>
+						<option name = "createAccount" value = "Create a New Client Account"> Create a New Client Account</option>
+					</div>
+					
+					<br><div class="input-group full">
+					  <input type="submit" value="SUBMIT" onclick = "validation()"/>
+					</div>
+					<div class="input-group full">
+					  <input type="reset" value="RESET" />
+					</div>
+					 <script type="text/javascript" >
+						function formSubmit() {
+							document.getElementById("myForm").submit();
+						}
+					</script>
+					 <div class="errors">
+					 </div>
+				</form> 
+			</p>
+		</h2>
+	</div>
